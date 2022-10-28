@@ -9,7 +9,7 @@ async function handleConnection(page: Page, config: any) {
 
     let url = new URL(frame.url());
 
-    console.log(url.searchParams);
+    console.log(frame.url(), url);
 
     let captchaGod = new CaptchaSolver(url.searchParams.get("k"));
 

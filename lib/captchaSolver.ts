@@ -7,6 +7,9 @@ const SOLVE_ENDPOINT = (sitekey: string, data: any, userAgent: string) =>
 const CHECK_ENDPOINT = (requestID: any) =>
   `http://2captcha.com/res.php?key=0b1e4659fbe0e6a639f7616b86d9c28a&method=hcaptcha&id=${requestID}&json=1&action=get`;
 
+/*
+* Thank you AstridCMD <3
+*/
 class CaptchaSolver extends EventEmitter {
   sitekey: string;
   data: any;
