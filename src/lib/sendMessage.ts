@@ -1,4 +1,4 @@
-import captchaSolver from "./captchaSolver";
+import CaptchaSolver from "./captchaSolver";
 import { Page } from "puppeteer-core";
 
 async function sendMessage(page: Page, config: any) {
@@ -9,8 +9,8 @@ async function sendMessage(page: Page, config: any) {
   let frames = await page.frames();
   let frame = frames.find((f) => f.url().includes("google.com"));
   if (frame) {
-    captchaSolver.solve();
-    captchaSolver.on("solved", async (key: string) => {
+    CaptchaSolver.solve();
+    CaptchaSolver.on("solved", async (key: string) => {
       page.$eval(".g-recaptcha-response", (i) => {
         i.innerHTML = key;
       });

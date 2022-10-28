@@ -59,4 +59,4 @@ class CaptchaSolver extends EventEmitter {
   }
 }
 
-module.exports = CaptchaSolver;
+export default CaptchaSolver;
