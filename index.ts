@@ -38,13 +38,7 @@ import config from "./config";
     if (d == 3) await el.click();
   }
 
-  await page.waitForTimeout(2000);
-
-  let randomMessage = config.messages[
-    Math.floor(Math.random() * config.messages.length)
-  ] as string;
-
-  async function init() {
+  async function sendMessage() {
     // console.log("Sending message");
     // await page.focus(".chatmsg");
     // await page.keyboard.type(`${randomMessage}`);
@@ -60,24 +54,27 @@ import config from "./config";
     // await page.click(".disconnectbtn");
     // console.log("Reconnecting");
     // await page.click(".disconnectbtn");
-
-    while ((await page.$(".sendbtn[disabled]")) !== null) {
-      new Promise((r) => setTimeout(r, 3000));
-
-      console.log("Sending message");
-      await page.focus(".chatmsg");
-      await page.keyboard.type(`${randomMessage}`);
-      await page.keyboard.press("Enter");
-
-      console.log("Keyword: ", await page.$(".statuslog"));
-      new Promise((r) => setTimeout(r, 2000));
-
-      console.log("Screenshotting");
-      await page.screenshot({ path: `./tmp/${Date.now()}.png` });
-      await page.click(".disconnectbtn");
-      break;
+    while (await page.$(".sendbtn[disabled]")) {
+      console.log("Waiting to connect");
     }
+    new Promise((r) => setTimeout(r, 3000));
+
+    let randomMessage = config.messages[
+      Math.floor(Math.random() * config.messages.length)
+    ] as string;
+
+    console.log("Sending message");
+    await page.focus(".chatmsg");
+    await page.keyboard.type(`${randomMessage}`);
+    await page.keyboard.press("Enter");
+
+    console.log("Keyword: ", await page.$(".statuslog"));
+    new Promise((r) => setTimeout(r, 2000));
+
+    console.log("Screenshotting");
+    await page.screenshot({ path: `./tmp/${Date.now()}.png` });
+    await page.click(".disconnectbtn");
   }
 
-  init();
+  sendMessage();
 })();
