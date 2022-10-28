@@ -8,6 +8,8 @@ const config = {
     "free anal vids s5mBfRqyZs",
     "cumzone s5mBfRqyZs",
   ],
+  chrome_exe_path:
+    "C:\\Users\\Administrator.SADMIN\\Desktop\\Chrome\\chrome-win\\chrome.exe",
 };
 
 export default config;
