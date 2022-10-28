@@ -2,10 +2,6 @@ import CaptchaSolver from "./captchaSolver";
 import { Page } from "puppeteer-core";
 
 async function sendMessage(page: Page, config: any) {
-  // while (await page.$(".sendbtn[disabled]")) {
-  //   console.log("Waiting to connect");
-  // }
-
   let frames = await page.frames();
   let frame = frames.find(async (f) => (await f.title()) == "reCAPTCHA");
   if (frame) {
@@ -51,6 +47,10 @@ async function sendMessage(page: Page, config: any) {
       }, 2000);
     });
   }
+  while (await page.$(".sendbtn[disabled]")) {
+    console.log("Waiting to connect");
+  }
+
   // } else {
   //   new Promise((r) => setTimeout(r, 3000));
 

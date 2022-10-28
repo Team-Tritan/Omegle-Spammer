@@ -63,7 +63,9 @@ class CaptchaSolver extends EventEmitter {
   }
 
   timer() {
+    console.log("we are getting called");
     setTimeout(() => {
+      console.log("timer uwu");
       this.check();
     }, this.timeout);
   }
