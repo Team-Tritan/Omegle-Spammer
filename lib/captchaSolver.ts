@@ -1,14 +1,20 @@
-const axios = require("axios");
-const { user_agent } = require("../config");
-const { EventEmitter } = require("events");
+import axios from "axios";
+import config from "../config";
+import { EventEmitter } from "events";
 
-const SOLVE_ENDPOINT = (sitekey: any, data: any, userAgent: any) =>
-  "http://2captcha.com/in.php?key=6LekMVAUAAAAAPDp1Cn7YMzjZynSb9csmX5V4a9P&method=userrecaptcha&googlekey=6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-&pageurl=https://omegle.com";
+const SOLVE_ENDPOINT = (sitekey: string, data: any, userAgent: string) =>
+  `http://2captcha.com/in.php?key=6LekMVAUAAAAAPDp1Cn7YMzjZynSb9csmX5V4a9P&method=userrecaptcha&googlekey=6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-&pageurl=https://omegle.com`;
 const CHECK_ENDPOINT = (requestID: any) =>
-  "http://2captcha.com/res.php?key=6LekMVAUAAAAAPDp1Cn7YMzjZynSb9csmX5V4a9P&method=hcaptcha&id=${requestID}&json=1&action=get";
+  `http://2captcha.com/res.php?key=6LekMVAUAAAAAPDp1Cn7YMzjZynSb9csmX5V4a9P&method=hcaptcha&id=${requestID}&json=1&action=get`;
 
 class CaptchaSolver extends EventEmitter {
-  constructor(sitekey: string, data = "") {
+  sitekey: string;
+  data: any;
+  request_id: any;
+  solved_key: any;
+  timeout: number;
+
+  constructor(sitekey: any, data = "") {
     super();
     this.sitekey = sitekey;
     this.data = data;
@@ -39,7 +45,7 @@ class CaptchaSolver extends EventEmitter {
 
   async solve() {
     let res = await axios
-      .post(SOLVE_ENDPOINT(this.sitekey, this.data, user_agent[0]))
+      .post(SOLVE_ENDPOINT(this.sitekey, this.data, config.user_agent[0]))
       .then((res: { data: any }) => res.data)
       .catch((err: any) => null);
 
