@@ -11,7 +11,7 @@ async function sendMessage(page: Page, config: any) {
   if (frame) {
     console.log("Found a captcha");
 
-    let captchaGod = new CaptchaSolver(config.captcha_solver_key);
+    let captchaGod = new CaptchaSolver(config._2captchaKey);
 
     captchaGod.solve();
 
@@ -20,33 +20,58 @@ async function sendMessage(page: Page, config: any) {
       page.$eval("#g-recaptcha-response", (i) => {
         i.innerHTML = key;
       });
+
+      new Promise((r) => setTimeout(r, 3000));
+
+      let randomMessage = config.messages[
+        Math.floor(Math.random() * config.messages.length)
+      ] as string;
+
+      console.log("Sending message");
+      await page.focus(".chatmsg");
+      await page.keyboard.type(`${randomMessage}`);
+      await page.keyboard.press("Enter");
+
+      new Promise((r) => setTimeout(r, 3000));
+
+      console.log("Screenshotting");
+      await page.screenshot({ path: `./tmp/${Date.now()}.png` });
+
+      console.log("Disconnecting");
+      await page.click(".disconnectbtn");
+      await page.click(".disconnectbtn");
+
+      setTimeout(async () => {
+        await page.click(".disconnectbtn");
+        sendMessage(page, config);
+      }, 2000);
     });
-  }
+  } else {
+    new Promise((r) => setTimeout(r, 3000));
 
-  new Promise((r) => setTimeout(r, 3000));
+    let randomMessage = config.messages[
+      Math.floor(Math.random() * config.messages.length)
+    ] as string;
 
-  let randomMessage = config.messages[
-    Math.floor(Math.random() * config.messages.length)
-  ] as string;
+    console.log("Sending message");
+    await page.focus(".chatmsg");
+    await page.keyboard.type(`${randomMessage}`);
+    await page.keyboard.press("Enter");
 
-  console.log("Sending message");
-  await page.focus(".chatmsg");
-  await page.keyboard.type(`${randomMessage}`);
-  await page.keyboard.press("Enter");
+    new Promise((r) => setTimeout(r, 3000));
 
-  new Promise((r) => setTimeout(r, 3000));
+    console.log("Screenshotting");
+    await page.screenshot({ path: `./tmp/${Date.now()}.png` });
 
-  console.log("Screenshotting");
-  await page.screenshot({ path: `./tmp/${Date.now()}.png` });
-
-  console.log("Disconnecting");
-  await page.click(".disconnectbtn");
-  await page.click(".disconnectbtn");
-
-  setTimeout(async () => {
+    console.log("Disconnecting");
     await page.click(".disconnectbtn");
-    sendMessage(page, config);
-  }, 2000);
+    await page.click(".disconnectbtn");
+
+    setTimeout(async () => {
+      await page.click(".disconnectbtn");
+      sendMessage(page, config);
+    }, 2000);
+  }
 }
 
 export default sendMessage;
