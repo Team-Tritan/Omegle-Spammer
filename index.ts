@@ -39,29 +39,27 @@ export default async function init() {
 
   await page.waitForTimeout(2000);
 
-  do {
-    let randomMessage = config.messages[
-      Math.floor(Math.random() * config.messages.length)
-    ] as string;
+  let randomMessage = config.messages[
+    Math.floor(Math.random() * config.messages.length)
+  ] as string;
 
-    console.log("Sending message");
-    await page.focus(".chatmsg");
-    await page.keyboard.type(`${randomMessage}`);
-    await page.keyboard.press("Enter");
+  console.log("Sending message");
+  await page.focus(".chatmsg");
+  await page.keyboard.type(`${randomMessage}`);
+  await page.keyboard.press("Enter");
 
-    new Promise((r) => setTimeout(r, 2000));
+  new Promise((r) => setTimeout(r, 2000));
 
-    console.log("Disconnecting");
+  console.log("Disconnecting");
+  await page.click(".disconnectbtn");
+  await page.click(".disconnectbtn");
+  await page.click(".disconnectbtn");
+
+  while ((await page.$(".sendbtn[disabled]")) !== null) {
+    new Promise((r) => setTimeout(r, 3000));
     await page.click(".disconnectbtn");
-    await page.click(".disconnectbtn");
-    await page.click(".disconnectbtn");
-
-    while ((await page.$(".sendbtn[disabled]")) !== null) {
-      new Promise((r) => setTimeout(r, 3000));
-      await page.click(".disconnectbtn");
-      break;
-    }
-  } while (true);
+    break;
+  }
   init();
 }
 
