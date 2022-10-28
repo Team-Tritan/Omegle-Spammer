@@ -6,4 +6,4 @@
 - npm start
 - Check `./tmp` for screenshots.
 
-Enjoy :)
+Enjoy :) Needs to be run on a residential IP.
