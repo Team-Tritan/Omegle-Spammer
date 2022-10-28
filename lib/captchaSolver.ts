@@ -3,7 +3,7 @@ import config from "../config";
 import { EventEmitter } from "events";
 
 const SOLVE_ENDPOINT = (sitekey: string, data: any, userAgent: string) =>
-  `http://2captcha.com/in.php?key=0b1e4659fbe0e6a639f7616b86d9c28a&method=userrecaptcha&googlekey=6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-&pageurl=https://omegle.com`;
+  `http://2captcha.com/in.php?key=0b1e4659fbe0e6a639f7616b86d9c28a&method=userrecaptcha&googlekey=6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-&pageurl=https://omegle.com&json=1`;
 const CHECK_ENDPOINT = (requestID: any) =>
   `http://2captcha.com/res.php?key=0b1e4659fbe0e6a639f7616b86d9c28a&method=hcaptcha&id=${requestID}&json=1&action=get`;
 
