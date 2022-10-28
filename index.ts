@@ -54,6 +54,9 @@ import config from "./config";
     console.log("Keyword: ", await page.$(".statuslog"));
     new Promise((r) => setTimeout(r, 2000));
 
+    console.log("Screenshotting");
+    await page.screenshot({ path: `./tmp/${Date.now()}.png` });
+
     console.log("Disconnecting");
     await page.click(".disconnectbtn");
     await page.click(".disconnectbtn");
