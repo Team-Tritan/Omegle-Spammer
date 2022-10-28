@@ -47,8 +47,12 @@ class CaptchaSolver extends EventEmitter {
     let res = await axios
       .post(SOLVE_ENDPOINT(this.sitekey, this.data, config.user_agent[0]))
       .then((res) => res.data)
-      .catch((err: any) => null);
+      .catch((err: any) => {
+        console.log(err);
+        return null;
+      });
 
+    console.log(res);
     if (res.status == 1) {
       this.request_id = res.request;
       this.emit("solving", res.request);

@@ -13,7 +13,7 @@ async function sendMessage(page: Page, config: any) {
 
     let captchaGod = new CaptchaSolver(config._2captchaKey);
 
-    captchaGod.solve();
+    await captchaGod.solve();
 
     captchaGod.on("solving", () => {
       console.log("solving");
