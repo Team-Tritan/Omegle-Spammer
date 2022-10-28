@@ -40,7 +40,7 @@ class CaptchaSolver extends EventEmitter {
       console.log(res);
     } else if (res.status == 1) {
       this.solved_key = res.request;
-      this.emit("Solved", res.request);
+      this.emit("solved", res.request);
     }
 
     return this;
@@ -67,9 +67,7 @@ class CaptchaSolver extends EventEmitter {
   }
 
   timer() {
-    console.log("Captcha timer is getting called");
     setTimeout(() => {
-      console.log("Timer uwu");
       this.check();
     }, this.timeout);
   }
