@@ -15,7 +15,7 @@ export default async function init() {
   console.log("Visiting website");
   await page.goto("https://www.omegle.com");
   await page.$eval(
-    ".newtopicinput ",
+    ".newtopicinput",
     (el: any) => (el.value = config.keyword as string)
   );
   await page.click("#textbtn");
