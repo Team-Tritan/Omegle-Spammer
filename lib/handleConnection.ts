@@ -4,7 +4,7 @@ import { Page } from "puppeteer-core";
 async function handleConnection(page: Page, config: any) {
   let frames = await page.frames();
   frames.forEach(async (f) => {
-    console.log(f.url(), await f.name(), await f.content());
+    console.log(f.url(), await f.name());
   });
   let frame = frames.find(async (f) => (await f.name()) == "reCAPTCHA");
   if (frame) {
