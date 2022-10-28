@@ -10,6 +10,7 @@ const config = {
   ],
   chrome_exe_path:
     "C:\\Users\\Administrator.SADMIN\\Desktop\\Chrome\\chrome-win\\chrome.exe",
+  user_agent: ["Chrome"],
 };
 
 export default config;

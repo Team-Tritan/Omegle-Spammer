@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer-core";
 import config from "./config";
+import sendMessage from "./lib/sendMessage";
 
 (async () => {
   console.log("Launching browser");
@@ -40,33 +41,5 @@ import config from "./config";
     if (d == 3) await el.click();
   }
 
-  async function sendMessage() {
-    while (await page.$(".sendbtn[disabled]")) {
-      console.log("Waiting to connect");
-    }
-
-    new Promise((r) => setTimeout(r, 3000));
-
-    let randomMessage = config.messages[
-      Math.floor(Math.random() * config.messages.length)
-    ] as string;
-
-    console.log("Sending message");
-    await page.focus(".chatmsg");
-    await page.keyboard.type(`${randomMessage}`);
-    await page.keyboard.press("Enter");
-
-    new Promise((r) => setTimeout(r, 3000));
-
-    console.log("Screenshotting");
-    await page.screenshot({ path: `./tmp/${Date.now()}.png` });
-    await page.click(".disconnectbtn");
-    await page.click(".disconnectbtn");
-    setTimeout(async () => {
-      await page.click(".disconnectbtn");
-      sendMessage();
-    }, 2000);
-  }
-
-  sendMessage();
+  sendMessage(page, config);
 })();
