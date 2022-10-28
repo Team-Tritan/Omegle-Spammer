@@ -1,5 +1,5 @@
 const config = {
-  keyword: ["discord", "cummywummy420"],
+  keyword: ["discord"],
   messages: [
     "free esex . gg /s5mBfRqyZs",
     "big tiddy whores . gg/s5mBfRqyZs",
