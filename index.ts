@@ -17,6 +17,8 @@ export default async function init() {
 
   await page.focus(".newtopicinput");
   await page.keyboard.type(`${config.keyword}`);
+  await page.keyboard.press("Enter");
+
   // await page.$eval(
   //   ".newtopicinput",
   //   (el: any) => (el.value = config.keyword as string)
@@ -46,7 +48,9 @@ export default async function init() {
     ] as string;
 
     console.log("Sending message");
-    await page.$eval(".chatmsg ", (el: any) => (el.value = randomMessage));
+    // await page.$eval(".chatmsg ", (el: any) => (el.value = randomMessage));
+    await page.focus(".chatmsg");
+    await page.keyboard.type(`${randomMessage}`);
     await page.keyboard.press("Enter");
 
     new Promise((r) => setTimeout(r, 2000));
