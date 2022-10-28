@@ -16,10 +16,12 @@ import config from "./config";
   await page.goto("https://www.omegle.com");
   await page.focus(".newtopicinput");
 
-  config.keyword.forEach(async (i) => {
-    await page.keyboard.type(`${i}`);
-    await page.keyboard.press("Enter");
-  });
+  await Promise.all(
+    config.keyword.map(async (i) => {
+      await page.keyboard.type(`${i}`);
+      await page.keyboard.press("Enter");
+    })
+  );
 
   await page.click("#textbtn");
 
@@ -39,24 +41,10 @@ import config from "./config";
   }
 
   async function sendMessage() {
-    // console.log("Sending message");
-    // await page.focus(".chatmsg");
-    // await page.keyboard.type(`${randomMessage}`);
-    // await page.keyboard.press("Enter");
-
-    // console.log("Keyword: ", await page.$(".statuslog"));
-    // new Promise((r) => setTimeout(r, 2000));
-
-    // console.log("Screenshotting");
-    // await page.screenshot({ path: `./tmp/${Date.now()}.png` });
-
-    // console.log("Disconnecting");
-    // await page.click(".disconnectbtn");
-    // console.log("Reconnecting");
-    // await page.click(".disconnectbtn");
     while (await page.$(".sendbtn[disabled]")) {
       console.log("Waiting to connect");
     }
+
     new Promise((r) => setTimeout(r, 3000));
 
     let randomMessage = config.messages[
@@ -68,11 +56,11 @@ import config from "./config";
     await page.keyboard.type(`${randomMessage}`);
     await page.keyboard.press("Enter");
 
-    console.log("Keyword: ", await page.$(".statuslog"));
     new Promise((r) => setTimeout(r, 2000));
 
     console.log("Screenshotting");
     await page.screenshot({ path: `./tmp/${Date.now()}.png` });
+    await page.click(".disconnectbtn");
     await page.click(".disconnectbtn");
   }
 
