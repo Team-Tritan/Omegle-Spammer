@@ -14,10 +14,13 @@ export default async function init() {
 
   console.log("Visiting website");
   await page.goto("https://www.omegle.com");
-  await page.$eval(
-    ".newtopicinput",
-    (el: any) => (el.value = config.keyword as string)
-  );
+
+  await page.focus(".newtopicinput");
+  await page.keyboard.type(`${config.keyword}`);
+  // await page.$eval(
+  //   ".newtopicinput",
+  //   (el: any) => (el.value = config.keyword as string)
+  // );
   await page.click("#textbtn");
 
   const elHandleArray = await page.$$("div div p label");
