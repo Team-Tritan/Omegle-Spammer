@@ -1,13 +1,17 @@
 import CaptchaSolver from "./captchaSolver";
 import { Page } from "puppeteer-core";
 
-async function sendMessage(page: Page, config: any) {
+async function handleConnection(page: Page, config: any) {
   let frames = await page.frames();
   let frame = frames.find(async (f) => (await f.title()) == "reCAPTCHA");
   if (frame) {
     console.log("Found a captcha");
 
-    let captchaGod = new CaptchaSolver(config._2captchaKey);
+    let url = new URL(frame.url());
+
+    console.log(url.searchParams);
+
+    let captchaGod = new CaptchaSolver(url.searchParams.get("k"));
 
     await captchaGod.solve();
 
@@ -43,7 +47,7 @@ async function sendMessage(page: Page, config: any) {
 
       setTimeout(async () => {
         await page.click(".disconnectbtn");
-        sendMessage(page, config);
+        handleConnection(page, config);
       }, 2000);
     });
   }
@@ -79,4 +83,4 @@ async function sendMessage(page: Page, config: any) {
   // }
 }
 
-export default sendMessage;
+export default handleConnection;
