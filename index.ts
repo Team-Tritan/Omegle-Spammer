@@ -13,6 +13,7 @@ export default async function init() {
 
   console.log("Visiting website");
   await page.goto("https://www.omegle.com");
+  await page.$eval(".newtopicinput ", (el: any) => (el.value = "discord"));
   await page.click("#textbtn");
 
   const elHandleArray = await page.$$("div div p label");
