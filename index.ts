@@ -5,8 +5,8 @@ import config from "./config";
   console.log("Launching browser");
 
   let browser = await puppeteer.launch({
-    headless: true,
-    executablePath: "/usr/bin/chromium-browser",
+    headless: false,
+    executablePath: "C:\\Users\\Administrator.SADMIN\\Desktop\\Chrome\\chrome-win\\chrome.exe",
   });
 
   async function init() {
