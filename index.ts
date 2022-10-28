@@ -59,6 +59,7 @@ import config from "./config";
 
     console.log("Disconnecting");
     await page.click(".disconnectbtn");
+    console.log("Reconnecting");
     await page.click(".disconnectbtn");
     await page.click(".disconnectbtn");
 
@@ -67,9 +68,6 @@ import config from "./config";
       await page.click(".disconnectbtn");
       break;
     }
-
-    await page.close();
-    init();
   }
 
   init();
