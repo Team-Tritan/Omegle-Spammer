@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer-core";
+import config from "./config";
 
 export default async function init() {
   console.log("Launching browser");
@@ -6,14 +7,17 @@ export default async function init() {
     headless: true,
     executablePath: "/usr/bin/chromium-browser",
   });
-  
+
   let page = await browser.newPage();
 
   new Promise((r) => setTimeout(r, 1000));
 
   console.log("Visiting website");
   await page.goto("https://www.omegle.com");
-  await page.$eval(".newtopicinput ", (el: any) => (el.value = "discord"));
+  await page.$eval(
+    ".newtopicinput ",
+    (el: any) => (el.value = config.keyword as string)
+  );
   await page.click("#textbtn");
 
   const elHandleArray = await page.$$("div div p label");
@@ -34,8 +38,11 @@ export default async function init() {
   await page.waitForTimeout(2000);
 
   do {
+    let arr = config.messages;
+    let randomMessage = arr[Math.floor(Math.random() * arr.length)] as string;
+
     console.log("Sending message");
-    await page.$eval(".chatmsg ", (el: any) => (el.value = "message here"));
+    await page.$eval(".chatmsg ", (el: any) => (el.value = randomMessage));
     await page.keyboard.press("Enter");
 
     new Promise((r) => setTimeout(r, 2000));
