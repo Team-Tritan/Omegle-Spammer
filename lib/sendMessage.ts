@@ -10,8 +10,11 @@ async function sendMessage(page: Page, config: any) {
   let frame = frames.find((f) => f.url().includes("google.com"));
   if (frame) {
     console.log("Found a captcha");
-    CaptchaSolver.solve();
-    CaptchaSolver.on("solved", async (key: string) => {
+
+    let captchaGod = new CaptchaSolver(config.captcha_solver_key);
+
+    captchaGod.solve();
+    captchaGod.on("solved", async (key: string) => {
       page.$eval(".g-recaptcha-response", (i) => {
         i.innerHTML = key;
       });
