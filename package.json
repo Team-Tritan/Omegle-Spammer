@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd src; nodemon index.ts",
+    "start": "nodemon index.ts",
     "build": "tsc --build"
   },
   "author": "Dylan James",
