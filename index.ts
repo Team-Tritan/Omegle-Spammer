@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer-core";
 import config from "./config";
 
-export default async function init() {
+(async () => {
   console.log("Launching browser");
 
   let browser = await puppeteer.launch({
@@ -9,58 +9,65 @@ export default async function init() {
     executablePath: "/usr/bin/chromium-browser",
   });
 
-  let page = await browser.newPage();
+  async function init() {
+    let page = await browser.newPage();
 
-  new Promise((r) => setTimeout(r, 1000));
+    new Promise((r) => setTimeout(r, 1000));
 
-  console.log("Visiting website");
-  await page.goto("https://www.omegle.com");
-  await page.focus(".newtopicinput");
+    console.log("Visiting website");
+    await page.goto("https://www.omegle.com");
+    await page.focus(".newtopicinput");
 
-  await page.keyboard.type(`${config.keyword}`);
-  await page.keyboard.press("Enter");
+    config.keyword.forEach(async (i) => {
+      await page.keyboard.type(`${i}`);
+      await page.keyboard.press("Enter");
+    });
 
-  await page.click("#textbtn");
+    await page.click("#textbtn");
 
-  const elHandleArray = await page.$$("div div p label");
+    const elHandleArray = await page.$$("div div p label");
 
-  for (const el of elHandleArray) {
-    await el.click();
-  }
+    for (const el of elHandleArray) {
+      await el.click();
+    }
 
-  const confirm = await page.$$("div div p input");
-  var d = 0;
+    const confirm = await page.$$("div div p input");
+    var d = 0;
 
-  console.log("Confirming chat request");
-  for (const el of confirm) {
-    d++;
-    if (d == 3) await el.click();
-  }
+    console.log("Confirming chat request");
+    for (const el of confirm) {
+      d++;
+      if (d == 3) await el.click();
+    }
 
-  await page.waitForTimeout(2000);
+    await page.waitForTimeout(2000);
 
-  let randomMessage = config.messages[
-    Math.floor(Math.random() * config.messages.length)
-  ] as string;
+    let randomMessage = config.messages[
+      Math.floor(Math.random() * config.messages.length)
+    ] as string;
 
-  console.log("Sending message");
-  await page.focus(".chatmsg");
-  await page.keyboard.type(`${randomMessage}`);
-  await page.keyboard.press("Enter");
+    console.log("Sending message");
+    await page.focus(".chatmsg");
+    await page.keyboard.type(`${randomMessage}`);
+    await page.keyboard.press("Enter");
 
-  new Promise((r) => setTimeout(r, 2000));
+    console.log("Keyword: ", await page.$(".statuslog"));
+    new Promise((r) => setTimeout(r, 2000));
 
-  console.log("Disconnecting");
-  await page.click(".disconnectbtn");
-  await page.click(".disconnectbtn");
-  await page.click(".disconnectbtn");
-
-  while ((await page.$(".sendbtn[disabled]")) !== null) {
-    new Promise((r) => setTimeout(r, 3000));
+    console.log("Disconnecting");
     await page.click(".disconnectbtn");
-    break;
-  }
-  init();
-}
+    await page.click(".disconnectbtn");
+    await page.click(".disconnectbtn");
 
-init();
+    while ((await page.$(".sendbtn[disabled]")) !== null) {
+      new Promise((r) => setTimeout(r, 3000));
+      await page.click(".disconnectbtn");
+      break;
+    }
+
+    await page.close();
+    init();
+  }
+
+  init();
+})();
