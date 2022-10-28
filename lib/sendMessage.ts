@@ -2,9 +2,9 @@ import CaptchaSolver from "./captchaSolver";
 import { Page } from "puppeteer-core";
 
 async function sendMessage(page: Page, config: any) {
-  while (await page.$(".sendbtn[disabled]")) {
-    console.log("Waiting to connect");
-  }
+  // while (await page.$(".sendbtn[disabled]")) {
+  //   console.log("Waiting to connect");
+  // }
 
   let frames = await page.frames();
   let frame = frames.find((f) => f.url().includes("google.com"));
