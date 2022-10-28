@@ -38,8 +38,9 @@ export default async function init() {
   await page.waitForTimeout(2000);
 
   do {
-    let arr = config.messages;
-    let randomMessage = arr[Math.floor(Math.random() * arr.length)] as string;
+    let randomMessage = config.messages[
+      Math.floor(Math.random() * config.messages.length)
+    ] as string;
 
     console.log("Sending message");
     await page.$eval(".chatmsg ", (el: any) => (el.value = randomMessage));
