@@ -52,7 +52,8 @@ class CaptchaSolver extends EventEmitter {
         return null;
       });
 
-    console.log(res);
+    console.log(res.status);
+
     if (res.status == 1) {
       this.request_id = res.request;
       this.emit("solving", res.request);

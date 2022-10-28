@@ -47,9 +47,9 @@ async function sendMessage(page: Page, config: any) {
       }, 2000);
     });
   }
-  while (await page.$(".sendbtn[disabled]")) {
-    console.log("Waiting to connect");
-  }
+  // while (await page.$(".sendbtn[disabled]")) {
+  //   console.log("Waiting to connect");
+  // }
 
   // } else {
   //   new Promise((r) => setTimeout(r, 3000));
