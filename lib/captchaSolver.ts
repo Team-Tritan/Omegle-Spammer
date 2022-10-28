@@ -29,7 +29,7 @@ class CaptchaSolver extends EventEmitter {
     console.log("Checking status of captcha " + this.request_id);
     let res = await axios
       .get(CHECK_ENDPOINT(this.request_id))
-      .then((res: { data: any }) => res.data)
+      .then((res) => res.data)
       .catch((err: any) => null);
 
     if (res.status == 0) {
@@ -46,7 +46,7 @@ class CaptchaSolver extends EventEmitter {
   async solve() {
     let res = await axios
       .post(SOLVE_ENDPOINT(this.sitekey, this.data, config.user_agent[0]))
-      .then((res: { data: any }) => res.data)
+      .then((res) => res.data)
       .catch((err: any) => null);
 
     if (res.status == 1) {
