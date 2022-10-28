@@ -15,6 +15,10 @@ async function sendMessage(page: Page, config: any) {
 
     captchaGod.solve();
 
+    captchaGod.on("solving", () => {
+      console.log("solving");
+    });
+
     captchaGod.on("solved", async (key: string) => {
       console.log("Solved captcha: ", key);
       page.$eval("#g-recaptcha-response", (i) => {
