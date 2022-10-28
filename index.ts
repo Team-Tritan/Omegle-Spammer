@@ -56,12 +56,16 @@ import config from "./config";
     await page.keyboard.type(`${randomMessage}`);
     await page.keyboard.press("Enter");
 
-    new Promise((r) => setTimeout(r, 2000));
+    new Promise((r) => setTimeout(r, 3000));
 
     console.log("Screenshotting");
     await page.screenshot({ path: `./tmp/${Date.now()}.png` });
     await page.click(".disconnectbtn");
     await page.click(".disconnectbtn");
+    setTimeout(async () => {
+      await page.click(".disconnectbtn");
+      sendMessage();
+    }, 2000);
   }
 
   sendMessage();
