@@ -9,6 +9,7 @@ async function sendMessage(page: Page, config: any) {
   let frames = await page.frames();
   let frame = frames.find((f) => f.url().includes("google.com"));
   if (frame) {
+    console.log("Found a captcha");
     CaptchaSolver.solve();
     CaptchaSolver.on("solved", async (key: string) => {
       page.$eval(".g-recaptcha-response", (i) => {
@@ -32,8 +33,11 @@ async function sendMessage(page: Page, config: any) {
 
   console.log("Screenshotting");
   await page.screenshot({ path: `./tmp/${Date.now()}.png` });
+
+  console.log("Disconnecting");
   await page.click(".disconnectbtn");
   await page.click(".disconnectbtn");
+
   setTimeout(async () => {
     await page.click(".disconnectbtn");
     sendMessage(page, config);

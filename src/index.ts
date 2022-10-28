@@ -9,6 +9,7 @@ import sendMessage from "./lib/sendMessage";
     headless: false,
     executablePath: config.chrome_exe_path,
   });
+
   let page = await browser.newPage();
 
   new Promise((r) => setTimeout(r, 1000));
@@ -26,7 +27,7 @@ import sendMessage from "./lib/sendMessage";
 
   await page.click("#textbtn");
 
-  const elHandleArray = await page.$$("div div p label");
+  let elHandleArray = await page.$$("div div p label");
 
   for (const el of elHandleArray) {
     await el.click();
