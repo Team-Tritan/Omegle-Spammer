@@ -9,7 +9,7 @@ export default async function initBrowser() {
   console.log("Launching browser");
 
   let browser = await puppeteer.launch({
-    headless: false,
+    headless: config.headless,
     executablePath: config.chrome_exe_path,
   });
 
@@ -17,7 +17,7 @@ export default async function initBrowser() {
 
   new Promise((r) => setTimeout(r, 1000));
 
-  console.log("Visiting website");
+  console.log("Visiting website in browser");
   await page.goto("https://www.omegle.com");
   await page.focus(".newtopicinput");
 
@@ -39,10 +39,11 @@ export default async function initBrowser() {
   const confirm = await page.$$("div div p input");
   var d = 0;
 
-  console.log("Confirming chat request");
+  console.log("Confirming chat request on UI");
   for (const el of confirm) {
     d++;
     if (d == 3) await el.click();
   }
+
   handleConnection(page, config);
 }

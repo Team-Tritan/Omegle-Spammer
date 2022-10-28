@@ -3,13 +3,13 @@ import config from "../config";
 import { EventEmitter } from "events";
 
 const SOLVE_ENDPOINT = (sitekey: string, data: any, userAgent: string) =>
-  `http://2captcha.com/in.php?key=0b1e4659fbe0e6a639f7616b86d9c28a&method=userrecaptcha&googlekey=${sitekey}&pageurl=https://omegle.com&json=1`;
+  `http://2captcha.com/in.php?key=${config._2captchaKey}&method=userrecaptcha&googlekey=${sitekey}&pageurl=https://omegle.com&json=1`;
 const CHECK_ENDPOINT = (requestID: any) =>
-  `http://2captcha.com/res.php?key=0b1e4659fbe0e6a639f7616b86d9c28a&method=hcaptcha&id=${requestID}&json=1&action=get`;
+  `http://2captcha.com/res.php?key=${config._2captchaKey}&method=hcaptcha&id=${requestID}&json=1&action=get`;
 
 /*
-* Thank you AstridCMD <3
-*/
+ * Thank you <github/WindowsCMD> <3
+ */
 class CaptchaSolver extends EventEmitter {
   sitekey: string;
   data: any;
@@ -29,7 +29,7 @@ class CaptchaSolver extends EventEmitter {
   async check() {
     if (!this.request_id) throw new Error("No request id provided!");
 
-    console.log("Checking status of captcha " + this.request_id);
+    console.log("Checking status of captcha: " + this.request_id);
     let res = await axios
       .get(CHECK_ENDPOINT(this.request_id))
       .then((res) => res.data)
@@ -40,7 +40,7 @@ class CaptchaSolver extends EventEmitter {
       console.log(res);
     } else if (res.status == 1) {
       this.solved_key = res.request;
-      this.emit("solved", res.request);
+      this.emit("Solved", res.request);
     }
 
     return this;
@@ -55,11 +55,11 @@ class CaptchaSolver extends EventEmitter {
         return null;
       });
 
-    console.log(res.status);
+    console.log("Status: ", res.status);
 
     if (res.status == 1) {
       this.request_id = res.request;
-      this.emit("solving", res.request);
+      this.emit("Solving", res.request);
       this.timer();
     }
 
@@ -67,9 +67,9 @@ class CaptchaSolver extends EventEmitter {
   }
 
   timer() {
-    console.log("we are getting called");
+    console.log("Captcha timer is getting called");
     setTimeout(() => {
-      console.log("timer uwu");
+      console.log("Timer uwu");
       this.check();
     }, this.timeout);
   }

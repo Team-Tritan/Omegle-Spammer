@@ -3,13 +3,14 @@ import { Page } from "puppeteer-core";
 
 async function handleConnection(page: Page, config: any) {
   let frames = await page.frames();
-  let frame = frames.find(async (f) => (await f.title()) == "reCAPTCHA");
+  frames.forEach((f) => {
+    console.log(f.url());
+  });
+  let frame = frames.find(async (f) => f.name() == "reCAPTCHA");
   if (frame) {
     console.log("Found a captcha");
 
     let url = new URL(frame.url());
-
-    console.log(frame.url(), url);
 
     let captchaGod = new CaptchaSolver(url.searchParams.get("k"));
 

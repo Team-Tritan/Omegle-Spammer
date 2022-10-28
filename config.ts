@@ -1,4 +1,9 @@
 const config = {
+  chrome_exe_path:
+    "C:\\Users\\Administrator.SADMIN\\Desktop\\Chrome\\chrome-win\\chrome.exe",
+  user_agent: ["Chrome"],
+  _2captchaKey: "0b1e4659fbe0e6a639f7616b86d9c28a",
+
   keyword: ["discord"],
   messages: [
     "free esex . gg /s5mBfRqyZs",
@@ -8,10 +13,8 @@ const config = {
     "free anal vids s5mBfRqyZs",
     "cumzone s5mBfRqyZs",
   ],
-  chrome_exe_path:
-    "C:\\Users\\Administrator.SADMIN\\Desktop\\Chrome\\chrome-win\\chrome.exe",
-  user_agent: ["Chrome"],
-  _2captchaKey: "0b1e4659fbe0e6a639f7616b86d9c28a",
+
+  headless: false,
 };
 
 export default config;
