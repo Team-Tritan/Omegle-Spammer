@@ -39,11 +39,11 @@ export default async function initBrowser() {
   const confirm = await page.$$("div div p input");
   var d = 0;
 
-  console.log("Confirming chat request on UI");
+  console.log("Confirming TOS");
   for (const el of confirm) {
     d++;
     if (d == 3) await el.click();
   }
 
-  handleConnection(page, config);
+  handleConnection(page);
 }
