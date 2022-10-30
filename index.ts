@@ -1,5 +1,2 @@
-import initBrowser from "./lib/initBrowser";
-
-(async () => {
-  initBrowser();
-})();
+import browser from "./lib/browser";
+new browser();
