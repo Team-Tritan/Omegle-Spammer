@@ -6,4 +6,4 @@
 - `npm run dev` (or `yarn run dev`)
 - Check `./src/tmp` for screenshots.
 
-Enjoy :) Needs to be run on a (residential) IP proxy
+Enjoy :) Needs to be run on a (residential) IP proxy like proxies.rip.
