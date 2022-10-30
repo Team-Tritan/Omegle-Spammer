@@ -7,10 +7,7 @@ import handleChat from "./chat";
 export default class OmegleFuery {
   page: any;
   browser: any;
-  data!: {
-    ips: [];
-  };
-
+  
   constructor() {
     this.initPlugins();
     this.buildBrowser();
